@@ -143,11 +143,11 @@ The response format for each endpoint is a JSON object with the following fields
 
 Here are some examples of requests and responses for each endpoint:
 
-- `/api/channel/{channel}?channel=developer`
+- `/api/channel/developer/`
 
   Request:
 
-  `http://consulthub.com/api/channel/{channel}?channel=developer&api_key=YOUR_API_KEY`
+  `http://consulthub.com/api/channel/developer/?api_key=YOUR_API_KEY`
 
   Response:
 
@@ -184,11 +184,11 @@ Here are some examples of requests and responses for each endpoint:
   }
   ```
 
-- `/api/channel/{channel}/username?channel=developer&username=john`
+- `/api/channel/{channel}/{username}/`
 
   Request:
 
-  `http://consulthub.com/api/channel/{channel}/username?channel=developer&username=john&api_key=YOUR_API_KEY`
+  `http://consulthub.com/api/channel/developer/john/?api_key=YOUR_API_KEY`
 
   Response:
 
@@ -222,11 +222,10 @@ Here are some examples of requests and responses for each endpoint:
   }
   ```
 
-- `/api/channel/{channel}/username/question_title?channel=developer&username=john&question_title=How to use Django?`
-
+- `/api/channel/{channel}/{username}/{question_title}`
   Request:
 
-  `https://consulthub.com/api/channel/{channel}/username/question_title?channel=developer&username=john&question_title=How to use Django?&api_key=YOUR_API_KEY`
+  `https://consulthub.com/api/channel/developer/john/How_to_use_Django?api_key=YOUR_API_KEY`
 
   Response:
 
