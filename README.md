@@ -5,6 +5,28 @@
 
 ---
 
+
+## DevDependencies
+
+This project uses the following Python libraries as dev dependencies:
+
+- [Flask](https://flask.palletsprojects.com/en/3.0.x/): A lightweight web framework for used for building the API's endpoints.
+
+![Flask logo](https://flask.palletsprojects.com/en/2.0.x/_images/flask-logo.png)
+
+- [Redis](https://redis.io/): An used for caching.
+
+![Redis logo](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXBM7fu342qxqm35OYtXyzQGu4Ef0k62-o3uojpg11o8l9AdMUT1Ucl73U62fqKL0Zn4Y&usqp=CAU)
+
+- [MongoDB](https://www.mongodb.com/): A stores data. Used as the base for storage
+
+![MongoDB logo](https://webassets.mongodb.com/_com_assets/cms/mongodb_logo1-76twgcu2dm.png)
+
+- [Flasgger](): Helps generate interactive and user-friendly documentation for the Flask-based API.
+  ![Flasgger logo](https://github.com/flasgger/flasgger/raw/master/docs/flasgger.png)
+
+---
+
 ## Getting Started
 
 To use this API, you need to have a valid account and an API key. You can register for an account and get an API key at [http://consulthub/register](http://consulthub.com/register).
@@ -327,27 +349,6 @@ _Fields:_
       "updated_at": new Date()
 }
 ```
-
----
-
-## DevDependencies
-
-This project uses the following Python libraries as dev dependencies:
-
-- [Flask](https://flask.palletsprojects.com/en/3.0.x/): A lightweight web framework for used for building the API's endpoints.
-
-![Flask logo](https://flask.palletsprojects.com/en/2.0.x/_images/flask-logo.png)
-
-- [Redis](https://redis.io/): An used for caching.
-
-![Redis logo](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXBM7fu342qxqm35OYtXyzQGu4Ef0k62-o3uojpg11o8l9AdMUT1Ucl73U62fqKL0Zn4Y&usqp=CAU)
-
-- [MongoDB](https://www.mongodb.com/): A stores data. Used as the base for storage
-
-![MongoDB logo](https://webassets.mongodb.com/_com_assets/cms/mongodb_logo1-76twgcu2dm.png)
-
-- [Flasgger](): Helps generate interactive and user-friendly documentation for the Flask-based API.
-  ![Flasgger logo](https://github.com/flasgger/flasgger/raw/master/docs/flasgger.png)
 
 ---
 
