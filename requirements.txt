@@ -1,6 +1,6 @@
-Flask=3.0.0
-redis=5.0.1
-mongoengine=0.27.0
-yagmail=0.15.*
-flask-swagger=0.2.14
-bcrypt=4.0.1
+flask==3.0.0
+redis==5.0.1
+mongoengine==0.27.0
+yagmail==0.15.*
+flasgger==0.9.7b2
+bcrypt==4.0.1

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question of the Day</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #3498db;
+        }
+
+        .question-section {
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .question-section h2 {
+            color: #2c3e50;
+        }
+
+        .question {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #34495e;
+        }
+
+        .cta-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .cta-button:hover {
+            background-color: #2980b9;
+        }
+
+        .footer {
+            text-align: center;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>CollaborateConnect</h1>
+            <p>Your Daily Source of Collaboration</p>
+        </div>
+
+        <div class="question-section">
+            <h2>🌟 Question of the Day 🌟</h2>
+            <div class="question">
+                <p>Dear {{ channel_user }},</p>
+                <p>We hope you're having a fantastic day! Here's your Question of the Day:</p>
+                <p><strong>Category:</strong> {{ channel }} </p>
+                <p><strong>ID:</strong> {{ query_id }} </p>
+                <p><strong>Question:</strong> {{ query_text }}</p>
+                <p>Feel free to share your insights and collaborate with fellow professionals.</p>
+            </div>
+            <a href="http://consulthub.com/channel/{{ query_title }}" class="cta-button">Answer Question</a>
+        </div>
+
+        <div class="footer">
+            <p>Thank you for being a part of CollaborateConnect. Happy collaborating!</p>
+            <p>If you have any questions or need assistance, please contact our support team at
+                support@collaborateconnect.com.</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

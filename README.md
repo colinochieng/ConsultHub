@@ -271,6 +271,7 @@ Here are some examples of requests and responses for each endpoint:
 
 We welcome any contributions from developers who are interested in improving this project. You can clone or fork this repository and make your own changes. To run the project locally, you need to install the Python dependencies by running:
 
+`Note`: Incase you encounter this error `ImportError: cannot import name 'JSONEncoder' from 'flask.json'` consider the best solution from [here](https://stackoverflow.com/questions/76570896/importerror-cannot-import-name-jsonencoder-from-flask-json). Select the one that suites you best.
 ```
 pip install -r requirements.txt
 ```
@@ -290,6 +291,7 @@ _Fields:_
 
 - \_id (ObjectId)
 - username (String, Unique)
+- email (String, Unique)
 - password (String, Hashed)
 - field (String(e.g., "Developer"))
 - notifications (Embedded document) e.g
@@ -310,6 +312,7 @@ _Fields:_
 - channel (String (e.g. developer))
 - query_text (String)
 - created_at (Datetime)
+- updated_at = (DateTime)
 - responses (Embedded Document)
 
 **_`Response document body`_**
@@ -319,7 +322,9 @@ _Fields:_
       "_id": ObjectId("60c9a0f8b8f2a1c4f3a7e6a3"),
       "content": "Hello world",
       "author": "Mark",
-      "created_at": new Date()
+      "question_id": "123",
+      "created_at": new Date(),
+      "updated_at": new Date()
 }
 ```
 
@@ -339,7 +344,10 @@ This project uses the following Python libraries as dev dependencies:
 
 - [MongoDB](https://www.mongodb.com/): A stores data. Used as the base for storage
 
-## ![MongoDB logo](https://webassets.mongodb.com/_com_assets/cms/mongodb_logo1-76twgcu2dm.png)
+![MongoDB logo](https://webassets.mongodb.com/_com_assets/cms/mongodb_logo1-76twgcu2dm.png)
+
+- [Flasgger](): Helps generate interactive and user-friendly documentation for the Flask-based API.
+  ![Flasgger logo](https://github.com/flasgger/flasgger/raw/master/docs/flasgger.png)
 
 ---
 

@@ -1,0 +1,30 @@
+{
+    "username": "newtestdev",
+    "email": "oduguchristine@gmail.com",
+    "password": "2006@Dollar",
+    "field": "developer"
+}
+
+
+{
+    "username": "devmaster",
+    "email": "levisomondi368@gmail.com",
+    "password": "strongPassword789",
+    "field": "developer",
+    "notifications": {
+        "general_channel": true,
+        "own_channel": true
+    }
+}
+
+{
+    "username": "user1234",
+    "email": "colinokumu89@gmail.com",
+    "password": "securepassword123",
+    "field": "developer",
+    "notifications": {
+        "general_channel": true,
+        "own_channel": true
+    }
+}
+
