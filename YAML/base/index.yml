@@ -1,0 +1,16 @@
+# Descritpion of root endpoint
+definitions:
+  Response_Index:
+    type: object
+    properties:
+      status:
+        type: string
+      message:
+        type: string
+responses:
+  200:
+    description: Welcome info
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/Response_Index'

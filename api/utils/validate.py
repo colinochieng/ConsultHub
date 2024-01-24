@@ -107,7 +107,7 @@ def verify_query_data_and_send_mail(
         channel (str): field to query users
         questioner (Users): current user
     """
-    def filter_by_uname(user)-> bool:
+    def filter_by_uname(user) -> bool:
         """
         Args:
             user: user to use data from filtering

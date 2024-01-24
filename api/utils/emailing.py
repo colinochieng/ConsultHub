@@ -8,8 +8,8 @@ from jinja2 import Environment, FileSystemLoader
 from typing import Dict
 
 
-sender_email = os.getenv("MAIL_SENDER", "colinatjku@gmail.com")
-sender_password = os.getenv("MAIL_PASSWORD", "gwli cdnv vmpe kfzh")
+sender_email = os.getenv("MAIL_SENDER")
+sender_password = os.getenv("MAIL_PASSWORD")
 
 
 def render_email_html(contexts: Dict, file: str) -> str:

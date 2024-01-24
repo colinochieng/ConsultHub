@@ -1,0 +1,89 @@
+summary: get a channel's info
+consumes:
+  - application/json
+parameters:
+  - name: channel
+    type: string
+    in: path
+    required: true
+  - name: page
+    in: query
+    required: false
+    type: string
+  - name: page_size
+    in: query
+    required: false
+    type: string
+  - name: api_key
+    type: string
+    in: query
+  - name: X-API-Token
+    type: string
+    in: header
+security:
+  - APIKeyHeader: []
+  - APIKeyQueryParam: []
+responses:
+  200:
+    description: User's Information
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/SuccessResponse"
+  400:
+    description: Response for invalid input
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/Error_Response"
+  401:
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/UnauthorizedError"
+
+definitions:
+  SuccessResponse:
+    type: object
+    properties:
+      status:
+        type: string
+        enum: [success]
+      message:
+        type: string
+      data:
+          $ref: "#/definitions/Data"
+  Data:
+    type: object
+    properties:
+      questions:
+        type: array
+        items:
+          type: object
+          properties:
+            question_id:
+              type: string
+            question_title:
+              type: string
+            question_content:
+              type: string
+            responses:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  content:
+                    type: string
+                  author:
+                    type: string
+                  question_id:
+                    type: string
+                  created_at:
+                    type: string
+                    format: date-time
+                  updated_at:
+                    type: string
+                    format: date-time

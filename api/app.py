@@ -2,20 +2,23 @@
 """
 Module for defining flask core Application
 """
-from flask_mongoengine import MongoEngine
 from api import cache
 from api.utils.config import Config
-from flask import Flask, g, Response, jsonify, redirect, request, url_for
-from db.docs import Users, Queries, Notifications, Responses
 from api.utils.validate import (
     validate_email,
     validate_password,
     validate_uname,
     validate_notifications,
 )
+from api.utils.wraps import json_required, login_required
 from api.users.endpoints import users_endpoints
 from api.Auth.auth import auth
 from api.channel import channels
+from db.docs import Users, Queries, Notifications, Responses
+
+from flask_mongoengine import MongoEngine
+from flask import Flask, g, Response, jsonify, redirect, request, url_for
+from flasgger import swag_from, Swagger
 
 
 app = Flask(__name__)
@@ -25,12 +28,25 @@ app.register_blueprint(auth)
 app.register_blueprint(channels)
 
 mongo = MongoEngine(app)
+swagger = Swagger(app)
+
 
 err_res = {"status": "error", "message": ""}
 succ_res = {"status": "success", "message": ""}
 
 
+@app.route('/', strict_slashes=False)
+@swag_from("../YAML/base/index.yml")
+def index() -> Response:
+    """
+    View for the route path
+    """
+    succ_res["message"] = 'Welcome to ConsultHub API'
+    return jsonify(succ_res), 200
+
+
 @app.route("/status", strict_slashes=False)
+@swag_from("../YAML/base/status.yml")
 def status() -> Response:
     """
     view for status
@@ -39,6 +55,8 @@ def status() -> Response:
 
 
 @app.route("/register", methods=["POST"], strict_slashes=False)
+@json_required
+@swag_from("../YAML/base/register.yml")
 def create_account() -> Response:
     """
     function to create a user account
@@ -71,7 +89,7 @@ def create_account() -> Response:
         or not validate_password(password)
         or not validate_email(email)
     ):
-        err_res["message"] = "Invalid username, password or email"
+        err_res["message"] = "Invalid username, password or email(only Gmail)"
         return jsonify(err_res), 400
 
     if len(field) == 0:
@@ -107,6 +125,8 @@ def create_account() -> Response:
 
 
 @app.route("/api/general", strict_slashes=False)
+@login_required
+@swag_from("../YAML/base/api_general.yml")
 def get_general_channel() -> Response:
     """
     view for general channel
@@ -115,45 +135,6 @@ def get_general_channel() -> Response:
     return redirect(
         url_for("channel.handle_specific_channel", channel="general")
         )
-
-
-@app.before_request
-def before_request() -> Response | None:
-    """
-    Function to execute before any request
-    """
-    non_token_paths = [
-        "/status",
-        "/status/",
-        "/register/",
-        "/register",
-        "/api/auth/login",
-        "/api/auth/login/",
-    ]
-
-    if request.path not in non_token_paths:
-        token = request.headers.get("X-Api-Token")
-
-        if not token:
-            token = request.args.get("api_key")
-
-        if not token:
-            err_res["message"] = "No API Authentication Token"
-            return jsonify(err_res), 400
-
-        username = cache.get(token)
-
-        if not username:
-            err_res["message"] = "Invalid API Authentication Token"
-            return jsonify(err_res), 401
-
-        user = Users.find_user(username)
-        if not user:
-            err_res["message"] = "No account with the username"
-            return jsonify(err_res), 400
-
-        g.user = user
-        g.token = token
 
 
 @app.teardown_appcontext

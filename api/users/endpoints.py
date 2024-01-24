@@ -4,7 +4,8 @@ Module for user verifications
 """
 from flask import Blueprint, Response, jsonify, request, g
 from api.utils.validate import validate_notifications
-from api.utils.wraps import json_required
+from api.utils.wraps import json_required, login_required
+from flasgger import swag_from
 
 from db.docs import Users
 
@@ -16,6 +17,8 @@ invalid_field = {"status": "error", "message": "Invalid field"}
 
 
 @users_endpoints.route("/<username>", strict_slashes=False)
+@login_required
+@swag_from("../../YAML/users/get.yaml")
 def get_user(username) -> Response:
     """
     function to retrives user info
@@ -31,11 +34,16 @@ def get_user(username) -> Response:
     return jsonify(user.to_dict()), 200
 
 
-@users_endpoints.route("/", strict_slashes=False, methods=["PUT"])
+@users_endpoints.route("/", strict_slashes=False,
+                       endpoint="with_field", methods=["PUT"])
 @users_endpoints.route(
-    "/notifications", strict_slashes=False, methods=["PUT"]
+    "/notifications", endpoint="without_field",
+    strict_slashes=False, methods=["PUT"]
 )
 @json_required
+@login_required
+@swag_from("../../YAML/users/put_user.yml")
+@swag_from("../../YAML/users/put_notifications.yml")
 def handle_user() -> Response:
     """
     function to updates and retrive user info

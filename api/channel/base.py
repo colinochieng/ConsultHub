@@ -6,8 +6,8 @@ under the channel blueprint
 from api.channel import channels
 from flask import g, jsonify, redirect, request, Response, url_for
 from db.docs import Queries
-from api.utils.wraps import parse_pagination_params
-
+from api.utils.wraps import login_required, parse_pagination_params
+from flasgger import swag_from
 
 res = {
     "status": "success",
@@ -17,9 +17,11 @@ res = {
 
 @channels.route("/<channel>/", strict_slashes=False)
 @parse_pagination_params
+@login_required
+@swag_from("../../YAML/channels/get_channel.yml")
 def handle_specific_channel(channel) -> Response:
     """
-    function to handle request to a particular channe
+    function to handle request to a particular channel
     Args:
             channel(str): channel/field to check daat
     Return (Response): a JSON representation of questions
@@ -33,6 +35,8 @@ def handle_specific_channel(channel) -> Response:
 
 @channels.route("/", strict_slashes=False)
 @parse_pagination_params
+@login_required
+@swag_from("../../YAML/channels/get_channels.yml")
 def root_channel() -> Response:
     """
     function to compute the response for the base

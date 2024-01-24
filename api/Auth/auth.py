@@ -3,7 +3,9 @@
 Module for Authentications
 """
 import uuid
+from flasgger import swag_from
 from flask import Blueprint, g, jsonify, request, Response
+from api.utils.wraps import login_required
 from db.docs import Users
 from api import cache
 
@@ -14,6 +16,7 @@ succ_res = {"status": "success", "message": ""}
 
 
 @auth.route("/login/", methods=["POST"], strict_slashes=False)
+@swag_from("../../YAML/Auth/login.yml")
 def login_user() -> Response:
     """
     view to login user
@@ -32,11 +35,11 @@ def login_user() -> Response:
 
     if not user:
         err_res["message"] = "Invalid username"
-        return jsonify(err_res), 401
+        return jsonify(err_res), 400
     else:
         if not user.check_pwd(password):
             err_res["message"] = "Invalid password"
-            return jsonify(err_res), 401
+            return jsonify(err_res), 400
 
     api_token = str(uuid.uuid4())
 
@@ -51,6 +54,8 @@ def login_user() -> Response:
 
 
 @auth.route("/logout/", methods=["POST"], strict_slashes=False)
+@login_required
+@swag_from("../../YAML/Auth/logout.yml")
 def logout() -> Response:
     """
     logs out logged in user
@@ -58,6 +63,6 @@ def logout() -> Response:
     cache.delete(g.token)  # if exists
 
     res = jsonify()
-    res.status_code = 204
+    res.status_code = 200
 
     return res

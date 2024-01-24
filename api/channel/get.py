@@ -6,7 +6,9 @@ from bson import ObjectId, errors
 from api.utils.validate import verify_query_id
 from flask import Response, g, jsonify, request
 from api.channel import channels
+from api.utils.wraps import login_required
 from db.docs import Queries, Users
+from flasgger import swag_from
 
 res = {
     "status": "success",
@@ -16,6 +18,8 @@ res_err = {"status": "error", "message": ""}
 
 
 @channels.route("/<channel>/<username>/", strict_slashes=False)
+@login_required
+@swag_from("../../YAML/channels/get_users_channel.yml")
 def get_users_channel_data(channel: str, username: str) -> Response:
     """
     Args:
@@ -46,6 +50,8 @@ def get_users_channel_data(channel: str, username: str) -> Response:
 
 
 @channels.route("/<channel>/multi", strict_slashes=False)
+@login_required
+@swag_from("../../YAML/channels/fetch_multi.yml")
 def fetch_multi_users_channels_query_response(channel: str) -> Response:
     """
     fetches multi users data
@@ -78,6 +84,7 @@ def fetch_multi_users_channels_query_response(channel: str) -> Response:
 
 
 @channels.route("/<channel>/<username>/<question_title>", strict_slashes=False)
+@login_required
 def get_query_by_channel_uname_qtitle(
     channel: str, username: str, question_title_or_id: str
 ) -> Response:
@@ -129,6 +136,7 @@ def get_query_by_channel_uname_qtitle(
 
 @channels.route("/<channel>/questions/<question_id_or_title>",
                 strict_slashes=False)
+@login_required
 def get_question(channel, question_id_or_title) -> Response:
     """
     Args:
@@ -168,6 +176,7 @@ def get_question(channel, question_id_or_title) -> Response:
 
 
 @channels.route("/channel/response/<response_id>", strict_slashes=False)
+@login_required
 def get_response(response_id) -> Response:
     """
     computes the response

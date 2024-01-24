@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
-Module for dealing with
-posting of Question and Responses
+Module for updating questions and Responses
 """
 from bson import ObjectId, errors
 from flask import g, request, Response, jsonify
@@ -10,18 +9,16 @@ from api.utils.emailing import send_emails
 from api.utils.validate import verify_query_data_and_send_mail
 from api.utils.wraps import login_required
 from db.docs import Queries, Responses, Users
-from flasgger import swag_from
 
 res_err = {"status": "error", "message": ""}
 res_suc = {"status": "success", "message": ""}
 
 
-@channels.route("/", methods=["POST"], strict_slashes=False)
+@channels.route("/<channel>/update/question/<question_id>", methods=["PUT"], strict_slashes=False)
 @login_required
-@swag_from("../../YAML/channels/post_question.yml")
-def post_question() -> Response:
+def update_question() -> Response:
     """
-    function for posting user question
+    function for updating user question
     Returns: Response
     Note: for general's channel the query parameter should be set to true
     """
@@ -57,13 +54,12 @@ def post_question() -> Response:
     "/<channel>/<question_id>/response", strict_slashes=False, methods=["POST"]
 )
 @login_required
-@swag_from("../../YAML/channels/post_response.yml")
 def post_response(channel, question_id) -> Response:
     """
     Post question based on id
     Args:
         - channel (str): question channel
-        - question_id: id of the question responding to
+        - question_id: id of the question responsing to
     """
     try:
         question_id = ObjectId(question_id)
@@ -111,3 +107,4 @@ def post_response(channel, question_id) -> Response:
     res_suc.update({"data": data})
     res_suc["message"] = "Response Posted successfully"
     return jsonify(res_suc), 200
+

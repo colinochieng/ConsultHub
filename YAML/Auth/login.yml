@@ -1,0 +1,37 @@
+parameters:
+  - name: body
+    in: body
+    type: object
+    properties:
+      username:
+        type: string
+        required: True
+      password:
+        type: string
+        required: True
+responses:
+  200:
+    description: User's Information
+    content:
+      application/json:
+        $ref: "#/definitions/LoginResponse"
+  400:
+    description: Response for invalid input
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/Error_Response"
+
+definitions:
+  LoginResponse:
+    type: object
+    properties:
+      message:
+        type: string
+      status:
+        type: string
+      data:
+        type: object
+        properties:
+          data:
+            type: string

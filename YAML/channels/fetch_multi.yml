@@ -1,0 +1,101 @@
+summary: Get users' (multi) channel data
+description: |
+  JSON representation of the questions the named
+  users posted and their responses, together with
+  the questions they responded to with their responses
+parameters:
+  - name: channel
+    in: path
+    required: true
+    type: string
+    description: The channel to query from.
+  - name: name
+    in: query
+    required: true
+    type: array
+    items:
+      type: string
+      enum: ["me"]
+  - name: api_key
+    in: query
+    type: string
+  - name: X-API-Token
+    in: header
+    type: string
+security:
+  - APIKeyHeader: []
+  - APIKeyQueryParam: []
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/UsersChannelData'
+  400:
+    description: Invalid Username
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/Error_Response'
+  401:
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/UnauthorizedError"
+
+definitions:
+  UsersChannelData:
+    type: object
+    properties:
+      status:
+        type: string
+      message:
+        type: string
+      data:
+        type: object
+        properties:
+          username:
+            type: object
+          properties:
+            user_questions:
+              type: array
+              items:
+                $ref: '#/definitions/Question'
+            responded_questions:
+              type: array
+              items:
+                $ref: '#/definitions/Question'
+
+  Question:
+    type: object
+    properties:
+      question_id:
+        type: string
+      question_title:
+        type: string
+      question_content:
+        type: string
+      responses:
+        type: array
+        items:
+          $ref: '#/definitions/Response_Data'
+
+  Response_Data:
+    type: object
+    properties:
+      id:
+        type: string
+      content:
+        type: string
+      author:
+        type: string
+      question_id:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time

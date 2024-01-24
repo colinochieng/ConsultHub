@@ -1,0 +1,14 @@
+# Descritpion of status endpoint
+definitions:
+  Response_Status:
+    type: object
+    properties:
+      status:
+        type: string
+responses:
+  200:
+    description: API's current status
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/Response_Status'

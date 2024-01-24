@@ -1,0 +1,54 @@
+summary: get a channels' info
+consumes:
+  - application/json
+parameters:
+  - name: page
+    in: query
+    required: false
+    type: string
+  - name: page_size
+    in: query
+    required: false
+    type: string
+  - name: api_key
+    type: string
+    in: query
+  - name: X-API-Token
+    type: string
+    in: header
+security:
+  - APIKeyHeader: []
+  - APIKeyQueryParam: []
+responses:
+  200:
+    description: User's Information
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/SuccessResponse"
+  400:
+    description: Response for invalid input
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/Error_Response"
+  401:
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/UnauthorizedError"
+
+definitions:
+  ChannelsSuccessResponses:
+    type: object
+    properties:
+      status:
+        type: string
+        enum: [success]
+      message:
+        type: string
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/Data"

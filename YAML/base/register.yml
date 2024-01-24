@@ -1,0 +1,72 @@
+summary: create new user
+consumes:
+  - application/json
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      $ref: '#/definitions/Register_RequestBody'
+responses:
+  200:
+    description: User's Information
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/Response_Register'
+  400:
+    description: Response for invalid input
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/Error_Response'
+  409:
+    description: Response for conflicting Input
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/Error_Response'
+
+  415:
+    description: Unsupported media type
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/Error_Response'
+
+definitions:
+  Response_Register:
+    type: object
+    properties:
+      username:
+        type: string
+      field:
+        type: string
+      id:
+        type: string
+      notifications:
+        $ref: '#/definitions/Notifications'
+  Error_Response:
+    type: object
+    properties:
+      status:
+        type: string
+      message:
+        type: string
+  Register_RequestBody:
+    type: object
+    properties:
+      username:
+        type: string
+        required: true
+      password:
+        type: string
+        required: true
+      email:
+        type: string
+        required: true
+      field:
+        type: string
+        required: true
+      notifications:
+        $ref: "#/definitions/Notifications"

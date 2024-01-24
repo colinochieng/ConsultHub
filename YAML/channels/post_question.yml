@@ -1,0 +1,81 @@
+summary: Post user question
+description: |
+  Function for posting a user question. 
+  For the general's channel, the query parameter should be set to true.
+parameters:
+  - name: general
+    in: query
+    required: false
+    type: boolean
+    description: |
+      If set to true, the question will be posted to the general channel.
+      If not provided or set to false, the question will be posted to the user's channel.
+  - name: body
+    type: object
+    in: body
+    required: true
+    schema:
+      $ref: "#/definitions/QuestionRequestBody"
+  - name: api_key
+    in: query
+    type: string
+  - name: X-API-Token
+    in: header
+    type: string
+security:
+  - APIKeyHeader: []
+  - APIKeyQueryParam: []
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/SuccessQueryResponse'
+  400:
+    description: Invalid value for generals query parameter or invalid query input
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/Error_Response'
+  401:
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/UnauthorizedError"
+
+securityDefinitions:
+  APIKeyHeader:
+    type: apiKey
+    in: header
+    name: X-API-Token
+  APIKeyQueryParam:
+    type: apiKey
+    in: query
+    name: api_key
+
+definitions:
+  QuestionRequestBody:
+    type: object
+    properties:
+      title:
+        type: string
+        required: true
+      query_text:
+        type: string
+        required: true
+
+  SuccessQueryResponse:
+    type: object
+    properties:
+      message:
+        type: string
+      data:
+        type: object
+        properties:
+          id:
+            type: string
+          content:
+            type: string
+

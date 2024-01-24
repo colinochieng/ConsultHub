@@ -22,7 +22,7 @@ This project uses the following Python libraries as dev dependencies:
 
 ![MongoDB logo](https://webassets.mongodb.com/_com_assets/cms/mongodb_logo1-76twgcu2dm.png)
 
-- [Flasgger](): Helps generate interactive and user-friendly documentation for the Flask-based API.
+- [Flasgger](https://github.com/flasgger/flasgger): Helps generate interactive and user-friendly documentation for the Flask-based API.
   ![Flasgger logo](https://github.com/flasgger/flasgger/raw/master/docs/flasgger.png)
 
 ---

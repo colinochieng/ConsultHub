@@ -1,0 +1,22 @@
+parameters:
+  - name: api_key
+    in: query
+    type: string
+  - name: X-API-Token
+    in: header
+    type: string
+security:
+  - APIKeyHeader: []
+  - APIKeyQueryParam: []
+responses:
+  200:
+    description: User's Information
+    content:
+      application/json:
+        type: object
+  401:
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/UnauthorizedError"

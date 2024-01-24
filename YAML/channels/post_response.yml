@@ -1,0 +1,82 @@
+summary: Post user response
+description: view for posting questions
+parameters:
+  - name: channel
+    in: path
+    required: true
+    type: string
+    description: question channel
+  - name: question_id
+    in: path
+    required: true
+    type: string
+    description: id of the question responding to
+  - name: body
+    type: object
+    in: body
+    required: true
+    schema:
+      $ref: "#/definitions/ResponseRequestBody"
+  - name: api_key
+    in: query
+    type: string
+  - name: X-API-Token
+    in: header
+    type: string
+security:
+  - APIKeyHeader: []
+  - APIKeyQueryParam: []
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/SuccessResponsePost"
+  400:
+    description: Invalid value for generals query parameter or invalid query input
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/Error_Response"
+  401:
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/UnauthorizedError"
+
+securityDefinitions:
+  APIKeyHeader:
+    type: apiKey
+    in: header
+    name: X-API-Token
+  APIKeyQueryParam:
+    type: apiKey
+    in: query
+    name: api_key
+
+definitions:
+  ResponseRequestBody:
+    type: object
+    properties:
+      content:
+        type: string
+        required: true
+
+  SuccessResponsePost:
+    type: object
+    properties:
+      message:
+        type: string
+      data:
+        type: object
+        properties:
+          question_id:
+            type: string
+          question:
+            type: string
+          response_id:
+            type: string
+          response:
+            type: string

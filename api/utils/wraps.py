@@ -2,6 +2,7 @@
 """
 Module for Authentications
 """
+from functools import wraps
 from flask import g, jsonify, request, Response
 from typing import Any, Callable
 from db.docs import Users
@@ -18,12 +19,12 @@ def login_required(view_func) -> Callable[[str], Response]:
         view_func (function): decorated view
     return: function
     """
-
+    @wraps(view_func)
     def wrapper(*args, **kwargs) -> Callable[..., Response] | None:
         """
         describe: function for Authenticating user
         """
-        auth_token = request.headers["X-Api-Token"]
+        auth_token = request.headers.get('X-API-Token')
 
         if not auth_token:
             auth_token = request.args.get("api_key")
@@ -39,6 +40,7 @@ def login_required(view_func) -> Callable[[str], Response]:
             return jsonify(err_res), 401
 
         g.user = Users.find_user(username)
+        g.token = auth_token
 
         return view_func(*args, **kwargs)
 
@@ -51,7 +53,7 @@ def json_required(func: Callable[..., Response]) -> Callable[..., Response]:
     Args:
         func: view function
     """
-
+    @wraps(func)
     def wrapper(*args, **kwargs) -> Any:
         """
         wrapper function
@@ -71,7 +73,7 @@ def parse_pagination_params(func) -> Callable[..., Response]:
     Args:
         func (Function): view function
     """
-
+    @wraps(func)
     def wrapper(*args, **kwargs) -> Any:
         data = request.get_json()
         page = data.get("page") or request.args.get("page")

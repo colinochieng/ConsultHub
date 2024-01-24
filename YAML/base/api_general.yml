@@ -1,0 +1,41 @@
+summary: Get value for general channel
+security:
+  - APIKeyHeader: []
+  - APIKeyQueryParam: []
+parameters:
+  - name: api_key
+    type: string
+    in: query
+  - name: X-API-Token
+    type: string
+    in: header
+responses:
+  302:
+    description: Redirection
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/Response_Register"
+  401:
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/UnauthorizedError"
+
+securityDefinitions:
+  APIKeyHeader:
+    type: apiKey
+    in: header
+    name: X-API-Token
+  APIKeyQueryParam:
+    type: apiKey
+    in: query
+    name: api_key
+
+definitions:
+  UnauthorizedError:
+    description: API key is missing or invalid
+    headers:
+      WWW_Authenticate:
+        type: string

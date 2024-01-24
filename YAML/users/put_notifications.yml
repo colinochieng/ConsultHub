@@ -1,0 +1,33 @@
+parameters:
+  - name: notifications
+    in: body
+    schema:
+      $ref: "#definitions/Notifications"
+  - name: api_key
+    in: query
+    type: string
+  - name: X-API-Token
+    in: header
+    type: string
+security:
+  - APIKeyHeader: []
+  - APIKeyQueryParam: []
+responses:
+  200:
+    description: User's Information
+    content:
+      application/json:
+        schema:
+          $ref: '#/definitions/Response'
+  400:
+    description: Response for invalid input
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/Error_Response"
+  401:
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          $ref: "#/definitions/UnauthorizedError"
